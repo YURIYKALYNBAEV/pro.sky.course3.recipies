@@ -14,11 +14,11 @@ public class InfoProject {
     public InfoProject(String author,
                        String title,
                        LocalDate localDate,
-                       String description) throws IncorrectArgumentException {
-        setAuthor(author);
-        setTitle(title);
-        setLocalDate(localDate);
-        setDescription(description);
+                       String description) {
+        this.author = author;
+        this.title = title;
+        this.localDate = localDate;
+        this.description = description;
     }
 
     public String getAuthor() {
@@ -29,8 +29,9 @@ public class InfoProject {
         if (author != null && !author.isEmpty()) {
             this.author = author;
         } else {
-            throw new IncorrectArgumentException("автор проекта");
+            throw new IncorrectArgumentException("автор");
         }
+
     }
 
     public String getTitle() {
