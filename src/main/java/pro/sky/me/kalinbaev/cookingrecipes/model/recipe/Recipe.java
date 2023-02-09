@@ -1,11 +1,9 @@
 package pro.sky.me.kalinbaev.cookingrecipes.model.recipe;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import pro.sky.me.kalinbaev.cookingrecipes.model.exception.IncorrectArgumentException;
 import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +11,8 @@ public class Recipe {
     private String name;
     private int cookingTime;
     private int numberOfServings;
-    private List<Ingredient> ingredients;
-    private List<String> cookingInstructions;
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<String> cookingInstructions = new ArrayList<>();
 
     public Recipe(String name,
                   int cookingTime,
@@ -28,11 +26,11 @@ public class Recipe {
         return name;
     }
 
-    public void setName(String name) throws IncorrectArgumentException {
+    public void setName(String name) {
         if (name != null && !name.isEmpty()) {
             this.name = name;
         } else {
-            throw new IncorrectArgumentException("название рецепта");
+            throw new IllegalArgumentException("название рецепта");
         }
     }
 
@@ -40,11 +38,11 @@ public class Recipe {
         return cookingTime;
     }
 
-    public void setCookingTime(int cookingTime) throws IncorrectArgumentException {
+    public void setCookingTime(int cookingTime) {
         if (cookingTime < 0) {
             this.cookingTime = cookingTime;
         } else {
-            throw new IncorrectArgumentException("время приготовления");
+            throw new IllegalArgumentException("время приготовления");
         }
     }
 
@@ -52,11 +50,11 @@ public class Recipe {
         return numberOfServings;
     }
 
-    public void setNumberOfServings(int numberOfServings) throws IncorrectArgumentException {
+    public void setNumberOfServings(int numberOfServings) {
         if (numberOfServings < 1) {
             this.numberOfServings = numberOfServings;
         } else {
-            throw new IncorrectArgumentException("количество порций");
+            throw new IllegalArgumentException("количество порций");
         }
     }
 

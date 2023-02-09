@@ -1,7 +1,5 @@
 package pro.sky.me.kalinbaev.cookingrecipes.model.ingredient;
 
-import pro.sky.me.kalinbaev.cookingrecipes.model.exception.IncorrectArgumentException;
-
 import java.util.Objects;
 
 public class Ingredient {
@@ -19,11 +17,11 @@ public class Ingredient {
         return name;
     }
 
-    public void setName(String name) throws IncorrectArgumentException {
+    public void setName(String name) {
         if (name != null && !name.isEmpty()) {
             this.name = name;
         } else {
-            throw new IncorrectArgumentException("название ингредиента");
+            throw new IllegalArgumentException("название ингредиента");
         }
     }
 
@@ -31,11 +29,11 @@ public class Ingredient {
         return count;
     }
 
-    public void setCount(int count) throws IncorrectArgumentException {
+    public void setCount(int count) {
         if (count >= 0) {
             this.count = count;
         } else {
-            throw new IncorrectArgumentException("количество");
+            throw new IllegalArgumentException("количество");
         }
     }
 
@@ -43,11 +41,11 @@ public class Ingredient {
         return measureUnit;
     }
 
-    public void setMeasureUnit(String measureUnit) throws IncorrectArgumentException {
+    public void setMeasureUnit(String measureUnit) {
         if (measureUnit != null && !measureUnit.isEmpty()) {
             this.measureUnit = measureUnit;
         } else {
-            throw new IncorrectArgumentException("единица измерения");
+            throw new IllegalArgumentException("единица измерения");
         }
     }
 

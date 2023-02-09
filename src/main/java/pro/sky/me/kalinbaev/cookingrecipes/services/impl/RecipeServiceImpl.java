@@ -10,7 +10,7 @@ import java.util.Map;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private static int recipeId = 1;
-    private static Map<Integer, Recipe> recipeMap = new HashMap<>();
+    private final Map<Integer, Recipe> recipeMap = new HashMap<>();
 
     @Override
     public int addRecipe(Recipe recipe) {
@@ -20,12 +20,38 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe getRecipe(int recipeId) {
+        Recipe recipe = recipeMap.get(recipeId);
+        if (recipe != null) {
+            return recipe;
+        }
+        return null;
+    }
+
+    @Override
+    public Recipe readAllRecipes() {
         for (Recipe recipe : recipeMap.values()) {
-            Recipe recipes = recipeMap.get(recipeId);
-            if (recipes != null) {
-                return recipes;
+            if (recipe != null) {
+                return recipe;
             }
         }
         return null;
+    }
+
+    @Override
+    public Recipe updateRecipe(int recipeId, Recipe recipe) {
+        if (recipeMap.get(recipeId) != null) {
+            recipeMap.put(recipeId, recipe);
+            return recipe;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteRecipe(int recipeId) {
+        if (recipeMap.get(recipeId) != null) {
+            recipeMap.remove(recipeId);
+            return true;
+        }
+        return false;
     }
 }

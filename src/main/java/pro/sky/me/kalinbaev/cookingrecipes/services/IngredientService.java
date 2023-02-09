@@ -6,4 +6,10 @@ public interface IngredientService {
     int addIngredient(Ingredient ingredient);
 
     Ingredient getIngredient(int id);
+
+    Ingredient readAllIngredients();
+
+    Ingredient updateIngredient(int ingredientId, Ingredient ingredient);
+
+    boolean deleteIngredient(int ingredientId);
 }

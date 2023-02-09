@@ -10,19 +10,19 @@ import pro.sky.me.kalinbaev.cookingrecipes.services.IngredientService;
 @RestController
 @RequestMapping("/ingredient")
 public class IngredientController {
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
-    @Autowired
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping("/")
     public ResponseEntity<Integer> createIngredient(@RequestBody Ingredient ingredient) {
-        int ingredientId =  ingredientService.addIngredient(ingredient);
+        int ingredientId = ingredientService.addIngredient(ingredient);
         return ResponseEntity.ok().body(ingredientId);
     }
-    @GetMapping(value = "/read/{ingredientId}")
+
+    @GetMapping("/{ingredientId}")
     public ResponseEntity<Ingredient> readIngredientById(@PathVariable int ingredientId) {
         Ingredient ingredient = ingredientService.getIngredient(ingredientId);
         if (ingredient == null) {
@@ -30,5 +30,29 @@ public class IngredientController {
         }
         return ResponseEntity.ok(ingredient);
     }
+
+    @GetMapping("/")
+    public ResponseEntity<Ingredient> readAllIngredients() {
+        return null;
+    }
+
+    @PutMapping("/{ingredientId}")
+    public ResponseEntity<Ingredient> updateTransaction(@PathVariable int ingredientId,
+                                                        @RequestBody Ingredient ingredient) {
+        ingredient = ingredientService.updateIngredient(ingredientId, ingredient);
+        if (ingredient == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ingredient);
+    }
+
+    @DeleteMapping("/{ingredientId}")
+    public ResponseEntity<Void> deleteTransaction(@PathVariable int ingredientId) {
+        if (ingredientService.deleteIngredient(ingredientId)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
 }
