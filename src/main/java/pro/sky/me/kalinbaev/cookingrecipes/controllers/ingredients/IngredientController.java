@@ -8,6 +8,7 @@ import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
 import pro.sky.me.kalinbaev.cookingrecipes.services.IngredientService;
 
 @RestController
+@RequestMapping("/ingredient")
 public class IngredientController {
     private IngredientService ingredientService;
 
@@ -16,13 +17,13 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
-    @PostMapping(value = "/ingredient/creating")
+    @PostMapping(value = "/create")
     public ResponseEntity<?> createIngredient(@RequestBody Ingredient ingredient) {
         ingredientService.addIngredient(ingredient);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @GetMapping(value = "/ingredient/read")
-    public ResponseEntity<Ingredient> getUser(@RequestParam int ingredientId) {
+    @GetMapping(value = "/read")
+    public ResponseEntity<Ingredient> readIngredientById(@RequestParam int ingredientId) {
         Ingredient ingredient = ingredientService.getIngredient(ingredientId);
         return ingredient != null
                 ? new ResponseEntity<>(ingredient, HttpStatus.OK)
