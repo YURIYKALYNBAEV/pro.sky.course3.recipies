@@ -13,12 +13,19 @@ public class RecipeServiceImpl implements RecipeService {
     private static Map<Integer, Recipe> recipeMap = new HashMap<>();
 
     @Override
-    public void addRecipe(Recipe recipe) {
+    public int addRecipe(Recipe recipe) {
         recipeMap.put(recipeId++, recipe);
+        return recipeId;
     }
 
     @Override
     public Recipe getRecipe(int recipeId) {
-        return recipeMap.get(recipeId);
+        for (Recipe recipe : recipeMap.values()) {
+            Recipe recipes = recipeMap.get(recipeId);
+            if (recipes != null) {
+                return recipes;
+            }
+        }
+        return null;
     }
 }

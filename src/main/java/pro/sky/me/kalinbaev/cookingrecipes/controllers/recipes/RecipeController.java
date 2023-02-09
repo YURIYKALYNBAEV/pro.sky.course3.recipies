@@ -18,17 +18,17 @@ public class RecipeController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createRecipe(@RequestBody Recipe recipe) {
-        recipeService.addRecipe(recipe);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Integer> createRecipe(@RequestBody Recipe recipe) {
+        int recipeId = recipeService.addRecipe(recipe);
+        return ResponseEntity.ok().body(recipeId);
     }
 
-    @GetMapping("/read")
-    public ResponseEntity<Recipe> readRecipeById(@RequestParam int recipeId) {
+    @GetMapping("/read/{recipeId}")
+    public ResponseEntity<Recipe> readRecipeById(@PathVariable int recipeId) {
         Recipe recipe = recipeService.getRecipe(recipeId);
-        return recipe != null
-                ? new ResponseEntity<>(recipe, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (recipe == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(recipe);
     }
-
 }

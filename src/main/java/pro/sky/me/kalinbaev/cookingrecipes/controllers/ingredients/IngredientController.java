@@ -18,16 +18,17 @@ public class IngredientController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<?> createIngredient(@RequestBody Ingredient ingredient) {
-        ingredientService.addIngredient(ingredient);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<Integer> createIngredient(@RequestBody Ingredient ingredient) {
+        int ingredientId =  ingredientService.addIngredient(ingredient);
+        return ResponseEntity.ok().body(ingredientId);
     }
-    @GetMapping(value = "/read")
-    public ResponseEntity<Ingredient> readIngredientById(@RequestParam int ingredientId) {
+    @GetMapping(value = "/read/{ingredientId}")
+    public ResponseEntity<Ingredient> readIngredientById(@PathVariable int ingredientId) {
         Ingredient ingredient = ingredientService.getIngredient(ingredientId);
-        return ingredient != null
-                ? new ResponseEntity<>(ingredient, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (ingredient == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ingredient);
     }
 
 }
