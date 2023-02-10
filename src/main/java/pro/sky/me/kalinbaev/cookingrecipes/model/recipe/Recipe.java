@@ -2,10 +2,13 @@ package pro.sky.me.kalinbaev.cookingrecipes.model.recipe;
 
 import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+/**
+ * Сущность: Рецепт
+ */
 
 public class Recipe {
     private String name;
@@ -14,12 +17,12 @@ public class Recipe {
     private List<Ingredient> ingredients = new ArrayList<>();
     private List<String> cookingInstructions = new ArrayList<>();
 
-    public Recipe(String name,
-                  int cookingTime,
-                  int numberOfServings) {
+    public Recipe(String name, int cookingTime, int numberOfServings, List<Ingredient> ingredients, List<String> cookingInstructions) {
         this.name = name;
         this.cookingTime = cookingTime;
         this.numberOfServings = numberOfServings;
+        this.ingredients = ingredients;
+        this.cookingInstructions = cookingInstructions;
     }
 
     public String getName() {
@@ -27,11 +30,7 @@ public class Recipe {
     }
 
     public void setName(String name) {
-        if (name != null && !name.isEmpty()) {
-            this.name = name;
-        } else {
-            throw new IllegalArgumentException("название рецепта");
-        }
+        this.name = name;
     }
 
     public int getCookingTime() {
@@ -39,11 +38,7 @@ public class Recipe {
     }
 
     public void setCookingTime(int cookingTime) {
-        if (cookingTime < 0) {
-            this.cookingTime = cookingTime;
-        } else {
-            throw new IllegalArgumentException("время приготовления");
-        }
+        this.cookingTime = cookingTime;
     }
 
     public int getNumberOfServings() {
@@ -51,27 +46,23 @@ public class Recipe {
     }
 
     public void setNumberOfServings(int numberOfServings) {
-        if (numberOfServings < 1) {
-            this.numberOfServings = numberOfServings;
-        } else {
-            throw new IllegalArgumentException("количество порций");
-        }
+        this.numberOfServings = numberOfServings;
     }
 
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public List<String> getCookingInstructions() {
         return cookingInstructions;
     }
 
-    public void addIngredients(Ingredient ingredient) {
-        ingredients.add(ingredient);
-    }
-
-    public void addCookingInstructions(String instruction) {
-        cookingInstructions.add(instruction);
+    public void setCookingInstructions(List<String> cookingInstructions) {
+        this.cookingInstructions = cookingInstructions;
     }
 
     @Override
@@ -79,11 +70,7 @@ public class Recipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
-        return cookingTime == recipe.cookingTime
-                && numberOfServings == recipe.numberOfServings
-                && Objects.equals(name, recipe.name)
-                && Objects.equals(ingredients, recipe.ingredients)
-                && Objects.equals(cookingInstructions, recipe.cookingInstructions);
+        return cookingTime == recipe.cookingTime && numberOfServings == recipe.numberOfServings && Objects.equals(name, recipe.name) && Objects.equals(ingredients, recipe.ingredients) && Objects.equals(cookingInstructions, recipe.cookingInstructions);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package pro.sky.me.kalinbaev.cookingrecipes.controllers.info;
+package pro.sky.me.kalinbaev.cookingrecipes.controller.info;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -2,6 +2,9 @@ package pro.sky.me.kalinbaev.cookingrecipes.model.ingredient;
 
 import java.util.Objects;
 
+/**
+ * Сущность: Ингредиент
+ */
 public class Ingredient {
     private String name;
     private int count;
@@ -18,11 +21,7 @@ public class Ingredient {
     }
 
     public void setName(String name) {
-        if (name != null && !name.isEmpty()) {
-            this.name = name;
-        } else {
-            throw new IllegalArgumentException("название ингредиента");
-        }
+        this.name = name;
     }
 
     public int getCount() {
@@ -30,11 +29,7 @@ public class Ingredient {
     }
 
     public void setCount(int count) {
-        if (count >= 0) {
-            this.count = count;
-        } else {
-            throw new IllegalArgumentException("количество");
-        }
+        this.count = count;
     }
 
     public String getMeasureUnit() {
@@ -42,11 +37,7 @@ public class Ingredient {
     }
 
     public void setMeasureUnit(String measureUnit) {
-        if (measureUnit != null && !measureUnit.isEmpty()) {
-            this.measureUnit = measureUnit;
-        } else {
-            throw new IllegalArgumentException("единица измерения");
-        }
+        this.measureUnit = measureUnit;
     }
 
     @Override
