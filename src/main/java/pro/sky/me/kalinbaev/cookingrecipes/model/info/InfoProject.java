@@ -1,7 +1,5 @@
 package pro.sky.me.kalinbaev.cookingrecipes.model.info;
 
-import pro.sky.me.kalinbaev.cookingrecipes.model.exception.IncorrectArgumentException;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -25,11 +23,11 @@ public class InfoProject {
         return author;
     }
 
-    public void setAuthor(String author) throws IncorrectArgumentException {
+    public void setAuthor(String author) {
         if (author != null && !author.isEmpty()) {
             this.author = author;
         } else {
-            throw new IncorrectArgumentException("автор");
+            this.author = null;
         }
 
     }
@@ -38,11 +36,11 @@ public class InfoProject {
         return title;
     }
 
-    public void setTitle(String title) throws IncorrectArgumentException {
+    public void setTitle(String title) {
         if (title != null && !title.isEmpty()) {
             this.title = title;
         } else {
-            throw new IncorrectArgumentException("название проекта");
+            this.title = null;
         }
     }
 
@@ -50,11 +48,11 @@ public class InfoProject {
         return localDate;
     }
 
-    public void setLocalDate(LocalDate localDate) throws IncorrectArgumentException {
+    public void setLocalDate(LocalDate localDate) {
         if (localDate != null) {
             this.localDate = localDate;
         } else {
-            throw new IncorrectArgumentException("дата создания проекта");
+            this.localDate = null;
         }
     }
 
@@ -62,11 +60,11 @@ public class InfoProject {
         return description;
     }
 
-    public void setDescription(String description) throws IncorrectArgumentException {
+    public void setDescription(String description) {
         if (description != null) {
             this.description = description;
         } else {
-            throw new IncorrectArgumentException("описание проекта");
+            this.description = null;
         }
     }
 

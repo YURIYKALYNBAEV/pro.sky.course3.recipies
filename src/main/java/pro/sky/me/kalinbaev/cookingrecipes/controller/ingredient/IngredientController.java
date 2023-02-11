@@ -1,5 +1,7 @@
 package pro.sky.me.kalinbaev.cookingrecipes.controller.ingredient;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
@@ -9,6 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/ingredient")
+@Tag(name = "API для работы с ингредиентом", description = "CRUD-операции для ингредиента")
 public class IngredientController {
     private final IngredientService ingredientService;
 
@@ -16,32 +19,44 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
+    @Operation(
+            summary = "Создание ингредиента"
+    )
     @PostMapping("/")
     public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
-        ingredientService.addIngredient(ingredient);
-        return ResponseEntity.ok().body(ingredient);
+        return ResponseEntity.ok(ingredientService.addIngredient(ingredient));
     }
 
+    @Operation(
+            summary = "Чтение ингредиента по идентификатору"
+    )
     @GetMapping("/{ingredientId}")
     public ResponseEntity<Ingredient> readIngredientById(@PathVariable int ingredientId) {
         return ResponseEntity.of(ingredientService.getIngredientById(ingredientId));
     }
 
+    @Operation(
+            summary = "Чтение списка ингредиентов"
+    )
     @GetMapping("/")
     public ResponseEntity<Map<Integer, Ingredient>> readAllIngredients() {
         return ResponseEntity.ok(ingredientService.readAllIngredients());
     }
 
+    @Operation(
+            summary = "Обновление ингредиента по идентификатору"
+    )
     @PutMapping("/{ingredientId}")
     public ResponseEntity<Ingredient> updateIngredientById(@PathVariable int ingredientId,
                                                            @RequestBody Ingredient ingredient) {
         return ResponseEntity.ok(ingredientService.updateIngredientById(ingredientId, ingredient));
     }
 
+    @Operation(
+            summary = "Удаление ингредиента по идентификатору"
+    )
     @DeleteMapping("/{ingredientId}")
     public ResponseEntity<Ingredient> deleteIngredientById(@PathVariable int ingredientId) {
         return ResponseEntity.ok(ingredientService.deleteIngredientById(ingredientId));
     }
-
-
 }
