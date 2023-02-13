@@ -11,15 +11,13 @@ import pro.sky.me.kalinbaev.cookingrecipes.service.RecipeService;
 import pro.sky.me.kalinbaev.cookingrecipes.service.ValidationService;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.lang.reflect.Type;
+import java.util.*;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private static int recipeId = 1;
-    private TreeMap<Integer, Recipe> recipeMap = new TreeMap<>();
+    private Map<Integer, Recipe> recipeMap = new HashMap<>();
     private final ValidationService validationService;
     private FilesServiceImpl filesService;
 
@@ -28,10 +26,10 @@ public class RecipeServiceImpl implements RecipeService {
         this.filesService = filesService;
     }
 
-//    @PostConstruct
-//    private void init() {
-//        readFromFile();
-//    }
+    @PostConstruct
+    private void init() {
+        readFromFile();
+    }
 
     @Override
     public Recipe addRecipe(Recipe recipe) {
@@ -79,7 +77,7 @@ public class RecipeServiceImpl implements RecipeService {
     private void readFromFile() {
         try {
             String json = filesService.readFromFileRecipe();
-            recipeMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer,Recipe>>() {
+            recipeMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

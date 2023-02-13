@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private static int ingredientId = 1;
-    private  TreeMap<Integer, Ingredient> ingredientMap = new TreeMap<>();
+    private TreeMap<Integer, Ingredient> ingredientMap = new TreeMap<>();
     private final ValidationService validationService;
     private final FilesServiceImpl filesService;
 
@@ -23,6 +23,7 @@ public class IngredientServiceImpl implements IngredientService {
         this.validationService = validationService;
         this.filesService = filesService;
     }
+
     @PostConstruct
     private void init() {
         readFromFile();
@@ -74,7 +75,7 @@ public class IngredientServiceImpl implements IngredientService {
     private void readFromFile() {
         try {
             String json = filesService.readFromFileIngredient();
-            ingredientMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer,Ingredient>>() {
+            ingredientMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredient>>() {
             });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
