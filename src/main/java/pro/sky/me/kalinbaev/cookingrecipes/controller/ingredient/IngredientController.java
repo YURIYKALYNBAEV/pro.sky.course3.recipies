@@ -28,19 +28,11 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "всё хорошо, запрос выполнился"
+                    description = "Игредиент создан успешно."
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "есть ошибка в параметрах запроса"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "во время выполнения запроса произошла ошибка на сервере"
+                    description = "Ошибка в параметрах запроса"
             )
     })
     public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
@@ -54,19 +46,11 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "всё хорошо, запрос выполнился"
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "есть ошибка в параметрах запроса"
+                    description = "Чтение ингредиента завершено успешно"
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "во время выполнения запроса произошла ошибка на сервере"
+                    description = "Не найден запрашиваемый ресурс"
             )
     })
     public ResponseEntity<Ingredient> readIngredientById(@PathVariable int ingredientId) {
@@ -80,19 +64,7 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "всё хорошо, запрос выполнился"
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "есть ошибка в параметрах запроса"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "во время выполнения запроса произошла ошибка на сервере"
+                    description = "Чтение списка ингредиентов выполнено успешно"
             )
     })
     public ResponseEntity<Map<Integer, Ingredient>> readAllIngredients() {
@@ -106,19 +78,11 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "всё хорошо, запрос выполнился"
+                    description = "Обновление ингредиента завершено успешно"
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "есть ошибка в параметрах запроса"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "во время выполнения запроса произошла ошибка на сервере"
+                    description = "Ошибка в параметрах запроса"
             )
     })
     public ResponseEntity<Ingredient> updateIngredientById(@PathVariable int ingredientId,
@@ -133,19 +97,7 @@ public class IngredientController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "всё хорошо, запрос выполнился"
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "есть ошибка в параметрах запроса"
-            ),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении"
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "во время выполнения запроса произошла ошибка на сервере"
+                    description = "Удаление ингредиента завершено успешно"
             )
     })
     public ResponseEntity<Ingredient> deleteIngredientById(@PathVariable int ingredientId) {
