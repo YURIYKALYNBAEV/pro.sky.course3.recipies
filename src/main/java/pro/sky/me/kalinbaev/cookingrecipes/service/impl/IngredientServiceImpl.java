@@ -15,7 +15,7 @@ import java.util.*;
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private static int ingredientId = 1;
-    private TreeMap<Integer, Ingredient> ingredientMap = new TreeMap<>();
+    private Map<Integer, Ingredient> ingredientMap = new TreeMap<>();
     private final ValidationService validationService;
     private final FilesServiceImpl filesService;
 
@@ -34,8 +34,9 @@ public class IngredientServiceImpl implements IngredientService {
         if (!validationService.validate(ingredient)) {
             throw new ValidationException(ingredient.toString());
         }
+        ingredientMap.put(ingredientId++, ingredient);
         saveToFile();
-        return ingredientMap.put(ingredientId++, ingredient);
+        return ingredientMap.get(ingredientId);
     }
 
     @Override
@@ -53,13 +54,16 @@ public class IngredientServiceImpl implements IngredientService {
         if (!validationService.validate(ingredient)) {
             throw new ValidationException(ingredient.toString());
         }
+        ingredientMap.replace(ingredientId, ingredient);
         saveToFile();
-        return ingredientMap.replace(ingredientId, ingredient);
+        return ingredientMap.get(ingredientId);
     }
 
     @Override
     public Ingredient deleteIngredientById(int ingredientId) {
-        return ingredientMap.remove(ingredientId);
+        ingredientMap.remove(ingredientId);
+        saveToFile();
+        return ingredientMap.get(ingredientId);
     }
 
     private void saveToFile() {
@@ -67,7 +71,7 @@ public class IngredientServiceImpl implements IngredientService {
             String json = new ObjectMapper().writeValueAsString(ingredientMap);
             filesService.saveToFileIngredient(json);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
@@ -78,8 +82,7 @@ public class IngredientServiceImpl implements IngredientService {
             ingredientMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredient>>() {
             });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-
     }
 }

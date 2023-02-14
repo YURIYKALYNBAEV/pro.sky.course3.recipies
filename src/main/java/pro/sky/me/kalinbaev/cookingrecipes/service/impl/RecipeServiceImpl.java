@@ -19,7 +19,7 @@ public class RecipeServiceImpl implements RecipeService {
     private static int recipeId = 1;
     private Map<Integer, Recipe> recipeMap = new HashMap<>();
     private final ValidationService validationService;
-    private FilesServiceImpl filesService;
+    private final FilesServiceImpl filesService;
 
     public RecipeServiceImpl(ValidationService validationService, FilesServiceImpl filesService) {
         this.validationService = validationService;
@@ -36,8 +36,9 @@ public class RecipeServiceImpl implements RecipeService {
         if (!validationService.validate(recipe)) {
             throw new ValidationException(recipe.toString());
         }
+        recipeMap.put(recipeId++, recipe);
         saveToFile();
-        return recipeMap.put(recipeId++, recipe);
+        return recipeMap.get(recipeId);
     }
 
     @Override
@@ -55,13 +56,16 @@ public class RecipeServiceImpl implements RecipeService {
         if (!validationService.validate(recipe)) {
             throw new ValidationException(recipe.toString());
         }
+        recipeMap.replace(recipeId, recipe);
         saveToFile();
-        return recipeMap.replace(recipeId, recipe);
+        return recipeMap.get(recipeId);
     }
 
     @Override
     public Recipe deleteRecipeById(int recipeId) {
-        return recipeMap.remove(recipeId);
+        recipeMap.remove(recipeId);
+        saveToFile();
+        return recipeMap.get(recipeId);
     }
 
     private void saveToFile() {
@@ -71,7 +75,6 @@ public class RecipeServiceImpl implements RecipeService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void readFromFile() {
