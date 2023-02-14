@@ -73,7 +73,7 @@ public class RecipeServiceImpl implements RecipeService {
             String json = new ObjectMapper().writeValueAsString(recipeMap);
             filesService.saveToFileRecipe(json);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -83,7 +83,7 @@ public class RecipeServiceImpl implements RecipeService {
             recipeMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
