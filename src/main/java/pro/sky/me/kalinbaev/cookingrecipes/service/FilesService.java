@@ -1,5 +1,7 @@
 package pro.sky.me.kalinbaev.cookingrecipes.service;
 
+import java.io.File;
+
 public interface FilesService {
 
     boolean saveToFileIngredient(String json);
@@ -13,4 +15,7 @@ public interface FilesService {
     String readFromFileRecipe();
 
     boolean cleanDataFileRecipe();
+    File getDataFileRecipe();
+
+    File getDataFileIngredient();
 }

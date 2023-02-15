@@ -73,7 +73,6 @@ public class IngredientServiceImpl implements IngredientService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
     }
 
     private void readFromFile() {
