@@ -101,9 +101,11 @@ public class IngredientController {
             )
     })
     public ResponseEntity<Void> deleteIngredientById(@PathVariable int ingredientId) {
+
         if (ingredientService.deleteIngredientById(ingredientId)) {
             return ResponseEntity.ok().build();
         }
+
         return ResponseEntity.notFound().build();
     }
 }
