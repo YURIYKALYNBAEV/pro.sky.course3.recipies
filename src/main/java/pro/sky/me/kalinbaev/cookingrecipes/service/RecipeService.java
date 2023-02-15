@@ -49,5 +49,5 @@ public interface RecipeService {
      * @param recipeId идентификатор
      * @return удаленный ингредиент
      */
-    Recipe deleteRecipeById(int recipeId);
+    Boolean deleteRecipeById(int recipeId);
 }

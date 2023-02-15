@@ -36,7 +36,7 @@ public class IngredientServiceImpl implements IngredientService {
         }
         ingredientMap.put(ingredientId++, ingredient);
         saveToFile();
-        return ingredientMap.get(ingredientId);
+        return ingredient;
     }
 
     @Override
@@ -56,14 +56,17 @@ public class IngredientServiceImpl implements IngredientService {
         }
         ingredientMap.replace(ingredientId, ingredient);
         saveToFile();
-        return ingredientMap.get(ingredientId);
+        return ingredient;
     }
 
     @Override
-    public Ingredient deleteIngredientById(int ingredientId) {
-        ingredientMap.remove(ingredientId);
-        saveToFile();
-        return ingredientMap.get(ingredientId);
+    public Boolean deleteIngredientById(int ingredientId) {
+        if (ingredientMap.containsKey(ingredientId)) {
+            ingredientMap.remove(ingredientId);
+            saveToFile();
+            return true;
+        }
+        return false;
     }
 
     private void saveToFile() {

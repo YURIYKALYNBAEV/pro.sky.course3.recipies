@@ -38,7 +38,7 @@ public class RecipeServiceImpl implements RecipeService {
         }
         recipeMap.put(recipeId++, recipe);
         saveToFile();
-        return recipeMap.get(recipeId);
+        return recipe;
     }
 
     @Override
@@ -58,14 +58,17 @@ public class RecipeServiceImpl implements RecipeService {
         }
         recipeMap.replace(recipeId, recipe);
         saveToFile();
-        return recipeMap.get(recipeId);
+        return recipe;
     }
 
     @Override
-    public Recipe deleteRecipeById(int recipeId) {
-        recipeMap.remove(recipeId);
-        saveToFile();
-        return recipeMap.get(recipeId);
+    public Boolean deleteRecipeById(int recipeId) {
+        if (recipeMap.containsKey(recipeId)) {
+            recipeMap.remove(recipeId);
+            saveToFile();
+            return true;
+        }
+        return false;
     }
 
     private void saveToFile() {

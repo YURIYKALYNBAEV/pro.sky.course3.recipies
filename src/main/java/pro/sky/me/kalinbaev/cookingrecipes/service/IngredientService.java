@@ -48,5 +48,5 @@ public interface IngredientService {
      * @param ingredientId идентификатор
      * @return удаленный ингредиент
      */
-    Ingredient deleteIngredientById(int ingredientId);
+    Boolean deleteIngredientById(int ingredientId);
 }
