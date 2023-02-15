@@ -100,7 +100,10 @@ public class IngredientController {
                     description = "Удаление ингредиента завершено успешно"
             )
     })
-    public ResponseEntity<Ingredient> deleteIngredientById(@PathVariable int ingredientId) {
-        return ResponseEntity.ok(ingredientService.deleteIngredientById(ingredientId));
+    public ResponseEntity<Void> deleteIngredientById(@PathVariable int ingredientId) {
+        if (ingredientService.deleteIngredientById(ingredientId)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

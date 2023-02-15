@@ -100,7 +100,10 @@ public class RecipeController {
                     description = "Удаление рецепта завершено успешно"
             )
     })
-    public ResponseEntity<Recipe> deleteRecipeById(@PathVariable int recipeId) {
-        return ResponseEntity.ok(recipeService.deleteRecipeById(recipeId));
+    public ResponseEntity<Void> deleteRecipeById(@PathVariable int recipeId) {
+        if (recipeService.deleteRecipeById(recipeId)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
