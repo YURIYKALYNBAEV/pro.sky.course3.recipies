@@ -2,7 +2,6 @@ package pro.sky.me.kalinbaev.cookingrecipes.controller.apihandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pro.sky.me.kalinbaev.cookingrecipes.exception.ValidationException;
 

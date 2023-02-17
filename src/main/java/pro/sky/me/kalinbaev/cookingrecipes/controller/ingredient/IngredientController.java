@@ -24,7 +24,7 @@ public class IngredientController {
     @Operation(
             summary = "Создание ингредиента"
     )
-    @PostMapping("/")
+    @PostMapping()
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -60,7 +60,7 @@ public class IngredientController {
     @Operation(
             summary = "Чтение списка ингредиентов"
     )
-    @GetMapping("/")
+    @GetMapping()
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -100,10 +100,7 @@ public class IngredientController {
                     description = "Удаление ингредиента завершено успешно"
             )
     })
-    public ResponseEntity<Void> deleteIngredientById(@PathVariable int ingredientId) {
-        if (ingredientService.deleteIngredientById(ingredientId)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Ingredient> deleteIngredientById(@PathVariable int ingredientId) {
+        return ResponseEntity.ok(ingredientService.deleteIngredientById(ingredientId));
     }
 }

@@ -1,21 +1,21 @@
 package pro.sky.me.kalinbaev.cookingrecipes.service;
 
-import java.io.File;
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public interface FilesService {
 
-    boolean saveToFileIngredient(String json);
+    <T> void saveMapToFile(Map<Integer, T> map, Path path);
 
-    String readFromFileIngredient();
+    <T> Map<Integer, T> readMapFromFile(Path path, TypeReference<HashMap<Integer, T>> typeReference);
 
-    boolean cleanDataFileIngredient();
 
-    boolean saveToFileRecipe(String json);
+    void uploadFile(MultipartFile file, Path filePath) throws IOException;
 
-    String readFromFileRecipe();
-
-    boolean cleanDataFileRecipe();
-    File getDataFileRecipe();
-
-    File getDataFileIngredient();
+    Path saveToFile(String content, Path path) throws IOException;
 }

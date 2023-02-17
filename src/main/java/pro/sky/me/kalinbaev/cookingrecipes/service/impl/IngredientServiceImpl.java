@@ -1,32 +1,41 @@
 package pro.sky.me.kalinbaev.cookingrecipes.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.me.kalinbaev.cookingrecipes.exception.ValidationException;
 import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
+import pro.sky.me.kalinbaev.cookingrecipes.service.FilesService;
 import pro.sky.me.kalinbaev.cookingrecipes.service.IngredientService;
 import pro.sky.me.kalinbaev.cookingrecipes.service.ValidationService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class IngredientServiceImpl implements IngredientService {
     private static int ingredientId = 1;
-    private Map<Integer, Ingredient> ingredientMap = new TreeMap<>();
+    private Map<Integer, Ingredient> ingredientMap = new HashMap<>();
     private final ValidationService validationService;
-    private final FilesServiceImpl filesService;
+    private final FilesService filesService;
+    @Value("${path.to.file.ingredients}")
+    private String dataFilePathIngredient;
+    @Value("${file.name.ingredients}")
+    private String dataFileNameIngredient;
+    private Path ingredientPath;
 
-    public IngredientServiceImpl(ValidationService validationService, FilesServiceImpl filesService) {
-        this.validationService = validationService;
-        this.filesService = filesService;
-    }
 
     @PostConstruct
     private void init() {
-        readFromFile();
+        ingredientPath = Path.of(dataFilePathIngredient, dataFileNameIngredient);
+        ingredientMap = filesService.readMapFromFile(ingredientPath, new TypeReference<HashMap<Integer, Ingredient>>() {
+        });
     }
 
     @Override
@@ -35,7 +44,7 @@ public class IngredientServiceImpl implements IngredientService {
             throw new ValidationException(ingredient.toString());
         }
         ingredientMap.put(ingredientId++, ingredient);
-        saveToFile();
+        filesService.saveMapToFile(ingredientMap, ingredientPath);
         return ingredient;
     }
 
@@ -55,36 +64,26 @@ public class IngredientServiceImpl implements IngredientService {
             throw new ValidationException(ingredient.toString());
         }
         ingredientMap.replace(ingredientId, ingredient);
-        saveToFile();
+        filesService.saveMapToFile(ingredientMap, ingredientPath);
         return ingredient;
     }
 
     @Override
-    public Boolean deleteIngredientById(int ingredientId) {
-        if (ingredientMap.containsKey(ingredientId)) {
-            ingredientMap.remove(ingredientId);
-            saveToFile();
-            return true;
-        }
-        return false;
+    public Ingredient deleteIngredientById(int ingredientId) {
+        Ingredient ingredient = ingredientMap.remove(ingredientId);
+        filesService.saveMapToFile(ingredientMap, ingredientPath);
+        return ingredient;
     }
 
-    private void saveToFile() {
-        try {
-            String json = new ObjectMapper().writeValueAsString(ingredientMap);
-            filesService.saveToFileIngredient(json);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public File readFile() {
+        return ingredientPath.toFile();
     }
 
-    private void readFromFile() {
-        try {
-            String json = filesService.readFromFileIngredient();
-            ingredientMap = new ObjectMapper().readValue(json, new TypeReference<TreeMap<Integer, Ingredient>>() {
-            });
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void uploadFile(MultipartFile file) throws IOException {
+        filesService.uploadFile(file, ingredientPath);
+        ingredientMap = filesService.readMapFromFile(ingredientPath, new TypeReference<HashMap<Integer, Ingredient>>() {
+        });
     }
 }

@@ -24,7 +24,7 @@ public class RecipeController {
     @Operation(
             summary = "Создание рецепта"
     )
-    @PostMapping("/")
+    @PostMapping()
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -60,7 +60,7 @@ public class RecipeController {
     @Operation(
             summary = "Чтение списка рецептов"
     )
-    @GetMapping("/")
+    @GetMapping()
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -100,10 +100,7 @@ public class RecipeController {
                     description = "Удаление рецепта завершено успешно"
             )
     })
-    public ResponseEntity<Void> deleteRecipeById(@PathVariable int recipeId) {
-        if (recipeService.deleteRecipeById(recipeId)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Recipe> deleteRecipeById(@PathVariable int recipeId) {
+        return ResponseEntity.ok(recipeService.deleteRecipeById(recipeId));
     }
 }

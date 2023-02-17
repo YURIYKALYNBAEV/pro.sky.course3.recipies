@@ -1,15 +1,15 @@
 package pro.sky.me.kalinbaev.cookingrecipes.model.recipe;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
 import java.util.List;
 
 /**
  * Сущность: Рецепт
  */
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Recipe {
@@ -18,4 +18,11 @@ public class Recipe {
     private int numberOfServings;
     private List<Ingredient> ingredients;
     private List<String> cookingInstructions;
+
+    @Override
+    public String toString() {
+        return name +
+                "\n Время приготовления: " + cookingTime + " минут." +
+                "\n Количество порций: " + numberOfServings;
+    }
 }

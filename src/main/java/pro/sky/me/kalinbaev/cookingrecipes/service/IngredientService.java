@@ -1,7 +1,10 @@
 package pro.sky.me.kalinbaev.cookingrecipes.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.me.kalinbaev.cookingrecipes.model.ingredient.Ingredient;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,5 +51,18 @@ public interface IngredientService {
      * @param ingredientId идентификатор
      * @return удаленный ингредиент
      */
-    Boolean deleteIngredientById(int ingredientId);
+    Ingredient deleteIngredientById(int ingredientId);
+
+    /**
+     * Чтение файла ингредиентов
+     * @return файл ингредиентов
+     */
+    File readFile();
+
+    /**
+     * Загрузка файла ингредиентов
+     * @param file файл ингредиентов
+     * @throws IOException
+     */
+    void uploadFile(MultipartFile file) throws IOException;
 }
